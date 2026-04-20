@@ -1,4 +1,4 @@
-# !(/assets/images/Smart_Traffic_Monitor_Logo1.png) Smart Traffic Monitor
+# Smart Traffic Monitor
 
 [![Node.js Version](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0+-blue.svg)](https://mysql.com/)
