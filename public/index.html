@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Traffic Monitor | Live Traffic Intelligence</title>
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  
+  <!-- FAVICON - Multiple formats with correct paths -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/Smart_Traffic_Monitor_Logo1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/Smart_Traffic_Monitor_Logo1.png">
+  <link rel="apple-touch-icon" href="/assets/images/Smart_Traffic_Monitor_Logo1.png">
+  
+  <!-- Fallback: Emoji favicon that ALWAYS works -->
+  \<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' 
+  viewBox='0 0 100 120'%3E%3Cpath d='M50 0C22.4 0 0 22.4 0 50c0 15 11.2 27.6 24 32.8C28.4 100 40.8 120 50 120s21.6-20 26-37.2C88.8 77.6 100 65 
+  100 50 100 22.4 77.6 0 50 0zm0 10C72.1 10 90 27.9 90 50c0 10.3-3.9 19.6-10.3 26.6-.1.1-.3.1-.4 0L50 51.7 20.7 76.6c-.1.1-.3.1-.4 0C13.9 69.6 
+  10 60.3 10 50 10 27.9 27.9 10 50 10zm0 98c-5.1-13.6-13.9-33.8-19.1-46.8L50 81.3l19.1-19.9c-5.2 13-14 33.2-19.1 46.8z'
+   fill='%231a472a'/%3E%3Cpath d='M50 102c-5.1-13.6-13.9-33.8-19.1-46.8L50 76.3l19.1-19.9c-5.2 13-14 33.2-19.1 46.8z' 
+   fill='%23fff'/%3E%3Cpath d='M11 50c0-10.3 3.9-19.6 10.3-26.6.1-.1.3-.1.4 0L50 48.3 79.3 23.4c.1-.1.3-.1.4 0C86.1 30.4 90 39.7 90 50' 
+   fill='%23fff'/%3E%3Ccircle cx='50' cy='32' r='8' fill='%231a472a'/%3E%3Ccircle cx='50' cy='32' r='6' 
+   fill='%2322c55e'/%3E%3Ccircle cx='50' cy='32' r='6' fill='url(%23g)'/%3E%3Ccircle cx='50' cy='52' r='8' 
+   fill='%231a472a'/%3E%3Ccircle cx='50' cy='72' r='8' fill='%231a472a'/%3E%3Cdefs%3E%3CradialGradient 
+   id='g' cx='50%' cy='50%' r='50%' fx='50%' fy='50%'%3E%3Cstop offset='0%' stop-color='%23fff' stop-opacity='.6'/%3E%3Cstop 
+   offset='100%' stop-color='%23fff' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3C/svg%3E"\>
+</head>
+<body>
+  <header>
+  <div class="logo">
+    <img src="/assets/images/Smart_Traffic_Monitor_Logo1.jpeg" alt="Smart Traffic Monitor" class="logo-image" onerror="this.style.display='none'">
+    <div class="logo-text">
+      <h1>Smart Traffic Monitor</h1>
+      <span class="tagline">Real-time Traffic Intelligence</span>
+    </div>
+    <span class="live-badge">LIVE</span>
+  </div>
+  <div class="controls">
+    <button id="centerBtn" class="btn">📍 Center Map</button>
+    <div class="sim-control">
+      <label>⚡ Speed:</label>
+      <select id="simSpeed">
+        <option value="3000">🐢 Slow</option>
+        <option value="1500" selected>⚡ Normal</option>
+        <option value="750">🚀 Fast</option>
+      </select>
+    </div>
+    <button id="refreshBtn" class="btn">🔄 Refresh</button>
+  </div>
+</header>
+
+  <div id="map"></div>
+
+  <aside id="sidebar">
+    <div class="stats">
+      <h3>📊 Live Stats</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="vehicleCount">0</div>
+          <div class="stat-label">Active Vehicles</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="avgSpeed">0</div>
+          <div class="stat-label">Avg Speed (km/h)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="incidentCount">0</div>
+          <div class="stat-label">Active Incidents</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+  <h3>🔔 Live Alerts</h3>
+  <div id="alertList" class="alert-list"></div>
+</div>
+
+    <div class="section">
+  <h3>🌤️ Current Weather Impact</h3>
+  <div id="weatherWidget" class="weather-widget">
+    <div class="weather-loading">Click on map to see weather...</div>
+  </div>
+</div>
+
+    <div class="section">
+    <h3>📈 Analytics Dashboard</h3>
+    <div class="chart-container">
+        <canvas id="congestionChart" width="100%" height="150"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="speedChart" width="100%" height="150"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="incidentChart" width="100%" height="150"></canvas>
+    </div>
+</div>
+
+<div class="section">
+    <h3>🏆 Top Performing Vehicles</h3>
+    <table id="vehiclePerformanceTable" class="performance-table">
+        <thead>
+            <tr><th>Vehicle</th><th>Avg Speed</th><th>Max Speed</th><th>Status</th></tr>
+        </thead>
+        <tbody id="vehiclePerformanceBody">
+            <tr><td colspan="4">Loading...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+    <div class="section">
+      <h3>🚗 Active Vehicles</h3>
+      <div class="search-box">
+        <input type="text" id="vehicleSearch" placeholder="Search vehicle...">
+      </div>
+      <ul id="vehicleList" class="vehicle-list"></ul>
+    </div>
+
+    <div class="section">
+      <h3>⚠️ Incidents</h3>
+      <ul id="incidentList" class="incident-list"></ul>
+    </div>
+  </aside>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>
