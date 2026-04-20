@@ -69,7 +69,7 @@
 │     │ vehicles  │ │ segments  │ │ incidents │ │ cities  │   │
 │     └───────────┘ └───────────┘ └───────────┘ └─────────┘   │
 └─────────────────────────────────────────────────────────────┘
-
+```
 
 
 ## 🚀 Getting Started
@@ -90,10 +90,10 @@
 git clone https://github.com/yourusername/smart-traffic-monitor.git
 cd smart-traffic-monitor
 npm install
-
+```
 
 ## Create a .env file in the root directory:
-
+```text
 # Database Configuration (Required)
 DB_HOST=localhost
 DB_USER=root
@@ -118,10 +118,10 @@ WEATHER_AFFECTS_TRAFFIC=true
 
 # Cities to monitor
 CITIES=Bengaluru,Mumbai,Delhi,Hyderabad,Chennai,Pune,Kolkata,Ahmedabad
-
+```
 
 ## Setup Database
-
+```text
 # Login to MySQL
 mysql -u root -p
 
@@ -130,20 +130,21 @@ CREATE DATABASE smart_traffic_v2;
 USE smart_traffic_v2;
 SOURCE sql/schema.sql;
 EXIT;
-
+```
 
 
 ## Start Application
-
+```text
 cd smart-traffic-monitor
 node server.js
 
 ## Access the Application
 Open your browser and navigate to: http://localhost:3000
-
+```
 
 
 ## How to Use 
+```text
 Dashboard Controls
 Control	Action
 Center Map	Resets map view to show all road segments
@@ -168,9 +169,10 @@ BUS	Red	🚌
 TAXI	Orange	🚕
 TRUCK	Purple	🚚
 CAR / AUTO	Blue	🚗
-
+```
 
 ## 🔑 Optional API Keys Setup
+```text
 The application works without API keys using mock data. To enable live data:
 
 OpenWeatherMap API (Free)
@@ -183,8 +185,10 @@ Sign up at developer.tomtom.com
 Go to API Keys section
 Create new key for Traffic API
 Copy to .env as TOMTOM_API_KEY
+```
 
 📁 Project Structure
+```text
 smart-traffic-monitor/
 ├── server.js                 # Main Express server
 ├── package.json             # Dependencies
@@ -210,9 +214,10 @@ smart-traffic-monitor/
 │   └── assets/              # Images
 └── sql/
     └── schema.sql           # Database schema
-
+```
 
 🐛 Troubleshooting
+```text
 Issue	Solution
 MySQL connection error	Run net start MySQL80 (Windows) or sudo systemctl start mysql (Linux/Mac)
 Port 3000 already in use	Change PORT in .env file
@@ -223,7 +228,7 @@ Database Reset
 bash
 mysql -u root -p -e "DROP DATABASE IF EXISTS smart_traffic_v2; CREATE DATABASE smart_traffic_v2;"
 mysql -u root -p smart_traffic_v2 < sql/schema.sql
-
+```
 
 📝 License
 This project is licensed under the MIT License.
